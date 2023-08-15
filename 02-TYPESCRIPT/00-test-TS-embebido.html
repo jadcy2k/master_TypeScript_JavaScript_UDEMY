@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Prueba de typescript</title>
+</head>
+<body>
+
+
+  <script type="text/typescript">
+
+    
+    module Sayings {
+      export class Greeter {
+        greeting: string;
+        constructor (message: string) {
+          this.greeting = message;
+        }
+        greet() {
+          return "Hello, " + this.greeting;
+        }
+      }
+    }
+
+
+    var greeter = new Sayings.Greeter('world');
+    var button = document.createElement('button')
+    button.innerHTML = "Say Hello"
+    button.onclick = function() {
+      alert(greeter.greet())
+    }
+    document.body.appendChild(button);
+
+  </script>
+
+
+<!-- Mantener estas líneas al final para poder compilar el TS embebido: -->
+  <script type="text/javascript" src="./typescript.min.js"></script>
+  <script type="text/javascript" src="./typescript.compile.min.js"></script>
+</body>
+</html>

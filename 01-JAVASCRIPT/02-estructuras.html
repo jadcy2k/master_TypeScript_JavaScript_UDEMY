@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Master Typescript, JS, ES2021.</title>
+  <script>
+
+    // OPERADOR TERNARIO
+    // ####################################################################
+    let persona = ["Breton", 80];
+
+    // condicional:
+    if (persona[1] >= 18){
+      console.log("es mayor de edad");
+    } else {
+      console.log("es menor de edad");
+    }
+
+    // Lo mismo resumido:
+    let estado = (persona[1] >= 18) ? "mayor de edad" : "menor de edad";
+    console.log("El amigo", persona[0], "es", estado);
+
+    // OPERADORES ==, ===
+    // ####################################################################
+    let edad1 = 80; //number
+    let edad2 = "80"; //string
+    console.log("++ comparar solo el valor (80 == '80'):", edad1 == edad2); //true
+    console.log("++ comparar valor y tipo (80 === '80'):", edad1 === edad2); //false
+
+
+    // BUCLES "FOR OF", "FOR IN", "FOREACH"
+    // ####################################################################
+    console.log("--------------------------------------");
+    let nombres = ["Pep", "Ana", "Emi", "Pau"];
+    console.log(nombres);
+
+    //FOR OF:
+    console.log("++++++++ Bucle FOR OF (Devuelve valores):");
+    for (let nombre of nombres){
+      console.log(nombre);
+    }
+    //FOR IN:
+    console.log("++++++++ Bucle FOR IN (Devuelve indices):");
+    for (let indice in nombres){
+      console.log(indice);
+    } 
+    //FOREACH:
+    console.log("++++++++ Bucle FOREACH (es método de Array. Podemos pasar función callback):");
+    nombres.forEach( (nombre, indice) => {
+      console.log(indice, nombre);
+    });
+    // más simplificado:
+    nombres.forEach ( nombre => console.log(nombre));
+    nombres.forEach ( (n,i) => console.log(i,n));
+
+    // ITERABLES (iterator)
+    // ####################################################################
+    console.log("--------------------------------------");
+    let nombres2 = ["Aida", "Marc", "Erin", "Pau", "Luis"];
+    console.log(nombres2);
+    // Iterator:
+    const mi_iterable = nombres2[Symbol.iterator]();
+    console.log("++ Con Symbol.iterator creamos un iterable a partir de un Array.");
+    console.log(typeof mi_iterable, mi_iterable); //Tipo Object. Array Iterator.
+    //Recorrer con "next()":
+    console.log(mi_iterable.next()); //{value: 'Aida', done: false}, done indica si se ha acabado de iterar.
+    console.log(mi_iterable.next()); //{value: 'Marc', done: false}, done indica si se ha acabado de iterar.
+    console.log(mi_iterable.next()); //{value: 'Erin', done: false}, done indica si se ha acabado de iterar.
+    console.log(mi_iterable.next()); //{value: 'Pau', done: false}, done indica si se ha acabado de iterar.
+    console.log(mi_iterable.next()); //{value: 'Luis', done: false}, done indica si se ha acabado de iterar.
+    console.log(mi_iterable.next()); //{value: undefined, done: true}, done indica si se ha acabado de iterar.
+    console.log("++ si 'value:undefined, done:true' es que hemos llegado al final.");
+
+    // Transformar JSON en iterable:
+    console.log("--------------------------------------");
+    let fruta = {nombre: "Manzana", color: "verde", temporada: "invierno"}
+    console.log(fruta);
+    console.log("++ inicialmente, el JSON fruta NO se puede recorrer en bucle.");
+    //for (let propiedad of fruta) {console.log(propiedad);} // da error porque fruta NO es iterable.
+    console.log("++ se soluciona creando un 'iterable' (Symbol.iterator) y accediendo a sus propiedades con Object.values()");
+
+    fruta[Symbol.iterator] = () => {
+      let indice = 0;
+      let valores = Object.values(this);
+      return {
+        next() {
+          if (indice >= valores.length) {
+            return {
+              done: true,
+              value: undefined
+            };
+          }
+          return {
+            done: false,
+            value: valores[indice],
+            indice: indice++
+          };
+        }
+      }
+    }
+    console.log(fruta);
+    console.log("++ Ahora sí podemos recorrer las propiedades y valores del JSON, pero con FOR-IN:");
+    for (let propiedad in fruta) {
+      console.log(propiedad, fruta[propiedad]); //nombre manzana.
+    }
+
+    // FUNCIONES (ES2021)
+    // ####################################################################
+    console.log("--------------------------------------");
+
+    //Función con parámetro (cuidado!!):
+    let saludo = persona => console.log("Hola, " + persona);
+    saludo("Oscar");
+    saludo(); // No pasamos valor. La función establece persona como "undefined".
+    console.log("--------------------------------------");
+    
+    //Parámetros por defecto:
+    let saludo2 = (persona = "desconocido") => console.log("Hola, " + persona);
+    saludo2("Astrid");
+    saludo2();
+    console.log("--------------------------------------");
+
+    // Arrow function y this en JSON:
+    let tienda = {
+      nombre: "GAME",
+      ciudad: "Alicante",      
+      info1: function(){console.log(this.nombre)}, // THIS es correcto.
+      info2: () => {console.log(this.nombre)}, // THIS es incorrecto.
+      info3: () => {console.log(tienda.nombre)}, // En su lugar se usa el nombre del objeto.
+    }
+    console.log(tienda);
+    tienda.info1(); // GAME
+    tienda.info2(); // undefined
+    tienda.info3(); // GAME.
+    console.log("--------------------------------------");
+
+    // Pasar parámetros como OBJETO (para evitar olvidarse alguno) y asignar valores por defecto:
+    let mostrar_persona = ({elNombre = "desconocido", laCiudad = "ningún lugar"}) => {
+      console.log("Hola " + elNombre + " de " + laCiudad);
+    }
+    mostrar_persona({elNombre:"Juan",laCiudad:"Cadiz"});
+    mostrar_persona({elNombre: "Natalia"})
+    mostrar_persona({laCiudad: "Sevilla"})
+    console.log("--------------------------------------");
+
+    // DESESTRUCTURACIÓN (ES2021)
+    // ####################################################################
+
+    // Extraer datos de objetos y convertirlos para su uso.
+
+    // Desestructurar ARRAYS:
+    const ensalada = ['🍅', '🍄', '🥦', '🥒', '🌽', '🥕', '🥑'];
+    console.log(ensalada);
+
+    // si creamos un ARRAY de elementos y le asignamos "ensalada", cada uno obtendrá el que le toca por orden:
+    let [ingrediente1, ingrediente2, ingrediente3] = ensalada;
+    console.log("++ el elemento 'ingrediente1' es ", ingrediente1, typeof(ingrediente1)); //obtenemos el primer elemento, de tipo "string".
+    console.log("--------------------------------------");
+
+    // Desestructurar OBJETOS:
+    const humano = {nombre: 'Bertin', edad: 98, pais: 'Francia'} 
+    console.log(humano);
+    // Creamos un listado entre llaves {} y le asignamos el objeto:
+    const { nombre, edad, pais } = humano;
+    console.log("++ el elemento 'nombre' es ", nombre, typeof(nombre));
+    console.log("--------------------------------------");
+
+    // Desestructurar STRINGS:
+    let ficha_user = "VICTOR ROBLES 99999999E 19/03/1999 MADRID";
+    console.log("++ String de usuario:",ficha_user);
+
+    // Haremos un "split" por espacios para obtener un ARRAY, el que asignaremos un grupo de variables:
+    let [nom, cognom, DNI, fecha_nacimiento, ciutat] = ficha_user.split(' ');
+    console.log(nom);
+    console.log(cognom);
+    console.log(DNI);
+    console.log(fecha_nacimiento);
+    console.log(ciutat);
+    console.log("--------------------------------------");
+
+    // REST Y SPREAD
+    // ####################################################################
+
+    // SPREAD expande valores:
+    let heroes = ["Superman", "Batman", "Spiderman", "Thor", "Aquaman"];
+    console.log(heroes);
+    console.log(...heroes);
+    let superHeroes = [ "Thor", "Aquaman", ...heroes];
+    console.log(superHeroes);
+    console.log(...superHeroes);
+    console.log("--------------------------------------");
+
+    // REST representa un número indefinido de parámetros a una función:
+    listaFilms = (film1, film2, ...otras) => {
+      console.log(film1);
+      console.log(film2);
+      console.log(otras);
+    }
+    listaFilms (
+      "El resplador",
+      "Cars",
+      "Aviones",
+      "Bichos",
+      "Schrek",
+      "...etc",
+    )
+    console.log("++ Los 2 primeros parámetros están definidos, el resto los pone en un ARRAY.");
+    console.log("--------------------------------------");
+
+    // Incluso podemos definir nigún parámetro definido:
+    listaAmigos = (...friends) => {
+      console.log(friends);      
+      //for (friend of friends) {console.log(friend);}
+    }
+    listaAmigos("Antonio", "Ruben", "Olga", "Nico", "Lina", "...etc");
+    console.log("############ FIN ############");
+
+
+
+
+
+  </script>
+</head>
+<body>
+
+  <h1>ESTRUCTURAS, FUNCIONES, SPREAD, REST, ...</h1>
+  <h2>Ver el código fuente (dentro de "script" y la salida de cónsola.</h2>
+  
+</body>
+</html>

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PROMESAS</title>
+</head>
+<body>
+  <script>
+    // PROMESAS
+    // ####################################################################
+    console.log("++++++++++++ PROMESAS ++++++++++++++");
+    console.log("++ JS es un lenguaje ASÍNCRONO. Las promesas permiten controlar esas operaciones asíncronas.");
+
+    // Simulamos la respuesta de una petición API:
+    let arrayProductos = [
+      {
+        nombre: "Ordenador",
+        marca: "Apple",
+        precio: 1500
+      },
+      {
+        nombre: "Tablet",
+        marca: "Samsung",
+        precio: 750
+      },
+      {
+        nombre: "Smartphone",
+        marca: "Motorola",
+        precio: 475
+      },
+    ];
+    
+    // Acceder a los productos:
+    let getProductos = () => {
+      console.log("++ Simulación de respuesta API después de 2 segundos:");
+      // 2000 milisegundos:
+      setTimeout ( () => {console.log("resultado primera llamada:", arrayProductos);}, 2000 );
+      // Esta línea se ejecuta aunque no haya pasado los 2 segundos:
+      console.log("(La respuesta no ha aparecido aún!!");
+    };  
+    
+    // Invocar función:
+    getProductos();
+    console.log("--------------------------------------");
+
+    // Probamos con RETURN:
+    let getProductos2 = () => {
+      console.log("++ Simulación de OTRA respuesta API después de 2 segundos:");
+      // 2000 milisegundos:
+      setTimeout ( () => {return arrayProductos}, 2000 );
+      // Esta línea se ejecuta aunque no haya pasado los 2 segundos:
+      console.log("(La respuesta no ha aparecido aún!!");
+    };
+    
+    console.log("Resultado segunda llamada (undefined):", getProductos2()); // UNDEFINED!!
+    console.log("--------------------------------------");
+
+    
+    // Ahora probamos con PROMISE, que requiere una función con 2 parámetros: RESOLVE y REJECT:
+    // ####################################################################
+    let getProductosPromise = () => {
+      console.log("Esperando los datos...");
+      return new Promise ( (resolve, reject) => {
+        setTimeout ( () => {resolve(arrayProductos)}, 4000 ); //4 segundos.
+      });
+    };
+
+    // Ahora hay que reaccionar si existe un RESOLVE, lo hacemos con THEN:
+    getProductosPromise().then (items => {
+      console.log("resultado llamada a promesa:", items);
+      console.log("--------------------------------------");
+    });
+
+  </script>
+  <h1>PROMESAS (parte 1)</h1>
+  <h2>Ver el código fuente (dentro de "script" y la salida de cónsola.</h2>
+  <a href="https://www.udemy.com/course/master-en-typescript-javascript-moderno-ecmascript-es12-apis-html5/learn/lecture/28201882">
+    https://www.udemy.com/course/master-en-typescript-javascript-moderno-ecmascript-es12-apis-html5/learn/lecture/28201882
+  </a>
+  <h3>MÁS INFO:</h3>
+  <a href="https://developer.mozilla.org/es/docs/Web/JavaScript/Guide/Using_promises"></a>
+</body>
+</html>

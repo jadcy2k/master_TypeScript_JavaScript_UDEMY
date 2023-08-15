@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Arrays modernos</title>
+</head>
+<body>
+
+  <script>
+
+    /**
+     * Métodos de ARRAY modernos:
+     **/
+
+    let personas = ["Paula", "Raul", "Sonia", "Luis", "Ana", "Carlos"];
+
+    // FIND: Busqueda:
+    console.log("+ Array.find() devuelve un elemento o 'undefined':");
+    let busqueda = personas.find ( persona => persona === "Ana");
+    console.log("Existe Ana?:", busqueda);
+
+    let busqueda2 = personas.find ( persona => persona === "Lucas");
+    console.log("Existe Lucas?:", busqueda2);
+    console.log("-------------------------------------------");
+
+    // FROM: Crear array a partir de string:
+    console.log("+ Array.from('string'): Genera un array a partir del string");
+    console.log(Array.from("javascript"));
+    console.log("-------------------------------------------");
+
+    // Crear array en base a un objeto iterable:
+    console.log("+ Array.from(array, function): Genera otro array aplicando una función al array de entrada:");
+    let numeros = [1,2,3,4,5];
+    console.log("numeros:", numeros);    
+    let numeros_cuadrado = Array.from(numeros, num => Math.pow(num,2));
+    console.log("Números al cuadrado:", numeros_cuadrado);
+    console.log("-------------------------------------------");
+
+    // INCLUDES: Comprobar existencia con Array.includes():
+    console.log("+ Array.includes(): Comprobar existencia:");
+    console.log("Existe Raúl?", personas.includes("Raul"));
+    console.log("-------------------------------------------");
+
+    // FILTER: Filtrar array con Array.filter():
+    console.log("+ Array.filter() permite filtrar resultados:");
+    let personas_con_S = personas.filter( p => p.includes("s"));
+    console.log("Personas que tienen S:", personas_con_S);
+    console.log("-------------------------------------------");
+
+    // Convertir OBJETO a ARRAY:
+    console.log("+ Object.values(objeto): Permite convertir un OBJETO a ARRAY:");
+    const film_obj = {
+      titulo: "Aquaman",
+      genero: "Accion",
+      duracion: "180 minutos"
+    }
+    console.log("Objeto:", film_obj);
+    const film_array = Object.values(film_obj);
+    console.log("Array:", film_array);    
+    console.log("-------------------------------------------");
+    console.log("+ Iterar con Object.entries(objeto)");
+    Object.entries(film_obj).forEach (elem => console.log(elem));
+    Object.entries(film_obj).forEach ( ([key, val]) => console.log(key,"--", val));
+    console.log("-------------------------------------------");
+
+
+    // SOME: Buscar alguna coincidencia:
+    console.log("+ Array.some(): devuelve true si existe alguno en el array:");
+    let existe_sonia = personas.some ( nombre => nombre === "Sonia");
+    let existe_pedro = personas.some ( nombre => nombre === "Pedro");
+    console.log("Existe Sonia?:", existe_sonia);
+    console.log("Existe Pedro?:", existe_pedro);
+    console.log("-------------------------------------------");
+
+    // EVERY: Evalua si todos cumplen una condición:
+    console.log("+ Array.every(): Devuelve true si todos sus elementos cumplen una condición");
+    let num_pares =  [2,4,6,8,10,12];
+    console.log(num_pares);
+    console.log("Son todos pares?:", num_pares.every(n => n % 2 === 0));
+    let num_aleatorios = [1,2,3,4,5,6];
+    console.log(num_aleatorios);
+    console.log("Son todos pares?:", num_aleatorios.every(n => n % 2 === 0));
+    console.log("-------------------------------------------"); 
+
+    // MAP vs FOREACH:
+    console.log("+ Se puede recorrer un array con FOREACH y MAP.");
+    console.log("+ La diferencia es que FOREACH no devuelve nada y MAP sí:");
+    let personas_foreach = personas.forEach ( persona => persona);
+    console.log("Qué devuelve forEach?:", personas_foreach);
+    let personas_map = personas.map ( persona => persona);
+    console.log("Qué devuelve Map?:", personas_map);
+    console.log("-------------------------------------------"); 
+
+    // REDUCE:
+    console.log("+ Array.reduce(): Devuelve un valor haciendo operaciones acumulando valores:");
+    let nums = [1,2,3,4,5,6];
+    console.log(nums);
+    let sumaNums = nums.reduce ( (acumulador, actual) => acumulador + actual);
+    console.log("La suma de los números es:",sumaNums);
+    console.log("-------------------------------------------"); 
+
+  </script>
+
+  <h1>Arrays modernos</h1>
+  
+</body>
+</html>

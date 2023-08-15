@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>API NOTIFICACIONES</title>
+  <script type="text/javascript">
+    // NOTIFICATION: Comprobar si navegador es compatible:
+    // -----------------------------------------
+    if (Notification == "undefined") {
+      console.log("Actualiza de navegador YA.");
+      window.location.href = "https://www.google.com";      
+    }
+    console.log("Objeto 'Notification':", Notification);
+
+    // La función NOTIFICATION requiere PERMISOS de navegador,
+    // Se solicita mediante "requestPermission()":
+    // Puede ser "default", "denied" o "granted":
+    // -----------------------------------------
+
+    console.log("Otorgar permisos con método 'requestPermission()':", Notification.permission);
+    if (Notification.permission !== "granted") {
+      Notification.requestPermission();
+      console.log("Otorgar permisos con método 'requestPermission()':", Notification.permission);
+    }    
+    
+    // Otra forma:
+    // -----------------------------------------
+    Notification.requestPermission()
+      .then(function(permission) { 
+        console.log('Has permission?', permission)
+    });
+
+    // NOTA: Puede haber problemanas con los bloqueos de notificaciones en Chrome o FF.
+
+    console.log("---------------------------------------------------------------");
+
+    // CREAR una nueva notificación:
+    // -----------------------------------------
+    let titulo = "Título de la notificación";
+    let opciones = {
+      body: "Cuerpo de la notificación, Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam magna nisi, vehicula non pretium ut.",
+      icon: "data:image/png;base64,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"
+    }
+    const notificacion1 = new Notification(titulo, opciones);
+    console.log("Debería salir una notificación:", notificacion1);
+
+    // CERRAR notificacion en X segundos:
+    // -----------------------------------------
+    setTimeout ( () => {
+       notificacion1.close()
+    }, 3000);
+
+    // Controlar el CLICK:
+    // -----------------------------------------
+    notificacion1.onclick = (event) => {
+      event.preventDefault();
+      window.location.href = "http://www.google.com";
+    }
+
+    notificacion1.onclose = () => {
+      alert("Adios!!!");
+    }
+
+    console.log("---------------------------------------------------------------");
+
+  </script>
+</head>
+<body>
+  <h1>NOTIFICACIONES</h1>
+  <h3>(abrir Developer tools > console)</h3>  
+</body>
+</html>

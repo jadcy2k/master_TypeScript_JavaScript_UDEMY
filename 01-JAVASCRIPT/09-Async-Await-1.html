@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ASYNC-AWAIT</title>
+</head>
+<body>
+  <script>
+    // ASYNC-AWAIT permite la gestión de procesos asíncronos con promesas:
+    // ####################################################################
+
+    console.log("ASYNC define una función asíncrona que devuelve un objeto 'AsyncFunction'");
+    console.log("----------------------------------------------");
+  
+    // Simulamos la respuesta de una API:
+    let arrayProductos = [
+      {
+        nombre: "Ordenador",
+        marca: "Apple",
+        precio: 1500
+      },
+      {
+        nombre: "Tablet",
+        marca: "Samsung",
+        precio: 750
+      },
+      {
+        nombre: "Smartphone",
+        marca: "Motorola",
+        precio: 475
+      },
+    ];
+
+    // Obtenemos el resultado vía promise:
+    let getProductos = () => {
+      return new Promise ( (resolve, reject) => {
+        console.log("Cargando productos...");        
+        setTimeout(() => {
+          //resolve (arrayProductos);
+          reject (Error("Ha ocurrido un error!!"))          
+        }, 2000); //2 segundos.
+
+      });
+    }
+
+    // Definimos una función asíncrona para obtener los datos:
+    /**
+     * async function getProductos () {...} // function.
+     * let getProductos = async () => {...} // arrow-function.
+     **/
+
+    let getProductosAsync = async () => {
+
+      try {
+        let mis_productos = await getProductos ();
+        console.log(mis_productos);        
+      } catch (error) {
+        console.log(error.message);        
+      }
+    }
+
+    // Invocación norma (la comentamos para seguir con el siguiente ejercicio):
+    //getProductosAsync();
+
+    
+    // AWAIT PROMISE ALL:
+    // ####################################################################
+
+    // Definimos 4 funciones con promesas:
+    let getNombre = () => {
+      return new Promise ( (resolve,reject) => {
+        setTimeout(() => { resolve("Soy Alma Marcela Gozo.")}, 2000);
+      }); 
+    }
+    let getCiudad = () => {
+      return new Promise ( (resolve,reject) => {
+        setTimeout(() => { resolve("Vivo en Kronberg.")}, 2000);
+      }); 
+    }
+    let getEdad = () => {
+      return new Promise ( (resolve,reject) => {
+        setTimeout(() => { resolve("Tengo 578 años.")}, 2000);
+      }); 
+    }
+    let getColor = () => {
+      return new Promise ( (resolve,reject) => {resolve("Color azul.")})
+    }
+    
+    // Queremos ejecutar todas las promeses SIN esperar 2 segundos entre cada una:
+
+    let getAllInfo  = async () => {
+      try {
+        console.log("Cargando toda la informacion...");
+        // Esto devolverá un ARRAY con cada respuesta en cada posición:
+        let informacion = await Promise.all (
+          [
+            getNombre(),
+            getCiudad(),
+            getEdad(),
+            getColor(),
+          ]
+        );       
+
+        // Accedemos a las diferentes respuestas:
+        console.log("++ NOMBRE:", informacion[0]);
+        console.log("++ CIUDAD:", informacion[1]);
+        console.log("++ EDAD:", informacion[2]);
+        console.log("++ COLOR:", informacion[3]);
+
+        // El ARRAY sería el siguiente:
+        console.log("AWAIT PROMISE.ALL:",informacion);
+        console.log("----------------------------------------------");
+        
+      } catch (error) {      
+      }
+    }
+    
+    // Invocación:
+    getAllInfo();
+  
+  </script>
+
+
+  <h1>ASYNC y AWAIT</h1>
+  <a href="https://www.udemy.com/course/master-en-typescript-javascript-moderno-ecmascript-es12-apis-html5/learn/lecture/28216198#questions/16725446">
+    https://www.udemy.com/course/master-en-typescript-javascript-moderno-ecmascript-es12-apis-html5/learn/lecture/28216198#questions/16725446
+  </a>
+  <h4>
+    <ul>
+    <li><a href="https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Statements/async_function">ASYNC (mozilla docs)</a></li>
+    <li><a href="https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Operators/await">AWAIT (mozilla docs)</a></li>
+    <li><a href="https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Global_Objects/Promise/all">PROMISE.ALL (mozilla docs)</a></li>
+  </ul>
+  </h4>
+
+  <p> <b>ASYNC</b>  define una función asíncrona que devuelve un objeto 'AsyncFunction'</p>
+  <p> El operador <b>AWAIT</b> es usado para esperar a una Promise. Sólo puede ser usado dentro de una función async function.</p>
+  
+  
+
+</body>
+</html>

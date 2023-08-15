@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LOCALSTORAGE APLICACION</title>
+  <script type="text/javascript">
+
+    // LOCALSTORAGE: Comprobar si navegador es compatible (tye = function):
+    if (typeof Storage == "undefined") {
+      console.log("Actualiza de navegador YA.");
+      window.location.href = "https://www.google.com";      
+    }
+    // -------------------------------------------------------
+
+    // Guardar datos en el navegador:
+    localStorage.setItem ("nombre1", "James Hettfield");
+    localStorage.setItem ("nombre2", "Dave Gaham");
+    localStorage.setItem ("nombre3", "Freddie Mercury");
+    localStorage.setItem ("nombre4", "David Bowie");
+    localStorage.setItem ("nombre5", "Bruce Dickinson");
+
+    // -------------------------------------------------------
+    // Recuperar datos del almacenamiento local    
+    // Y pintarlos en un selector:
+    window.onload = () => {
+      let c = document.querySelector("#contenedor");
+      c.innerHTML = `<p id="nombre1"> - ${localStorage.getItem("nombre1")} <button>Borrar</button></p>`;
+      c.innerHTML += `<p id="nombre2"> - ${localStorage.getItem("nombre2")} <button>Borrar</button></p>`;
+      c.innerHTML += `<p id="nombre3"> - ${localStorage.getItem("nombre3")} <button>Borrar</button></p>`;
+      c.innerHTML += `<p id="nombre4"> - ${localStorage.getItem("nombre4")} <button>Borrar</button></p>`;
+      c.innerHTML += `<p id="nombre5"> - ${localStorage.getItem("nombre5")} <button>Borrar</button></p>`;
+      c.innerHTML += `<p><button id="all">Borrar todos</button></p>`;
+
+      // -------------------------------------------------------
+      // Obtener todos los botones:
+      let btns = document.querySelectorAll ("p button");
+      btns.forEach (b => {
+        b.addEventListener ("click", (evt) => {
+          let padre = evt.target.parentElement;
+          // Borrar del almacenamiento local:
+          localStorage.removeItem(padre.getAttribute("id"))
+          // Borrar elemento del DOM:
+          padre.remove();
+        });
+      });
+      // -------------------------------------------------------
+      // Obtener boton "all":
+      let btnAll = document.querySelector("#all");
+      btnAll.addEventListener("click", (evt)=>{
+        // Vaciar almacenamiento local (CUIDADO)
+        localStorage.clear(); 
+        c.innerHTML = ""; // borrar container.
+        evt.target.remove(); // (opcional) borrar boton.        
+      });
+      // -------------------------------------------------------
+    }
+  </script>
+  
+</head>
+<body>
+  <h1>Lista de cantantes</h1>
+  <h3>(abrir Developer tools > Application > Local Storage)</h3>
+  <div id="contenedor"></div>
+  <a href="https://www.udemy.com/course/master-en-typescript-javascript-moderno-ecmascript-es12-apis-html5/learn/lecture/28973366#overview">
+    https://www.udemy.com/course/master-en-typescript-javascript-moderno-ecmascript-es12-apis-html5/learn/lecture/28973366#overview
+  </a>  
+</body>
+</html>

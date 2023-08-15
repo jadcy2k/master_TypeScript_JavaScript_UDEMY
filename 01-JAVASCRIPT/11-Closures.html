@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Closures</title>
+
+  <script>
+
+    /**
+     * CLOSURE SINTAXIS:
+     * const nombre_closure = ( () => {...} )(); 
+     * 
+     **/
+
+    const coche = ( () => {
+      let _marca, _velocidad = 0, _puertas = 5; //Propiedades.
+      setMarca = (marca) => { _marca = marca;  return marca;}; // Metodos.
+      getMarca = () => { return _marca};
+      acelerar = () => { _velocidad++; return _velocidad;}
+      frenar = () => { _velocidad--; return _velocidad;}
+      // Devolver los métodos para poder usarlos fuera.
+      return {
+        setMarca,
+        getMarca,
+        acelerar,
+        frenar,
+        _puertas,
+      }
+    })();
+
+
+    // Invocaciones desde fuera (porque se ha "retornado" los métodos):
+    coche.setMarca("Ferrari");
+    console.log("la marca es:", coche.getMarca());
+    console.log("-------------------------------");
+    coche.acelerar();
+    coche.acelerar();
+    coche.acelerar();
+    console.log("Velocidad:",coche.acelerar());
+    console.log("-------------------------------");
+    console.log("Puertas: ", coche._puertas);
+
+
+  </script>
+</head>
+<body>
+  <h1>Closures</h1>
+
+  <ul>
+    <li>
+      <a href="https://www.udemy.com/course/master-en-typescript-javascript-moderno-ecmascript-es12-apis-html5/learn/lecture/28254886#questions">
+        https://www.udemy.com/course/master-en-typescript-javascript-moderno-ecmascript-es12-apis-html5/learn/lecture/28254886#questions
+      </a>
+    </li>
+    <li>
+      <a href="https://developer.mozilla.org/es/docs/Web/JavaScript/Closures">
+        https://developer.mozilla.org/es/docs/Web/JavaScript/Closures</a>
+    </li>
+  </ul>
+
+  <p>
+    una clausura permite acceder al ámbito de una función exterior desde una función interior. 
+    En JavaScript, las clausuras se crean cada vez que una función es creada.</p>
+  
+</body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ATRIBUTOS DATA</title>
+
+  <style>
+    li[data-continente = "europa"] {background-color:aqua;}
+    li[data-continente = "america"] {background-color:chartreuse;}
+    li[data-continente = "oceania"] {background-color:lightpink;}    
+  </style>
+
+  <script>
+    // Obtener TODOS los "li":
+    window.onload = () => {
+      let lista = document.querySelectorAll("#lista li");
+    
+      // Recorrer los "li" y añadir el dato "data-continente":
+      lista.forEach (elemento => {
+        let c = elemento.dataset.continente;
+        console.log("Obtener con 'dataset' el dato guardado:", c);
+        elemento.innerHTML += " | " + c;
+        if (c === "america") {
+          // Manipular estilo:
+          elemento.style.color = "gray";
+        }
+      });
+      // ---------------------------------
+    }
+  </script>
+</head>
+<body>
+  <h1>Atributos data</h1>
+  <h3>(agrega funcionalidad a los selectores DOM)</h3>
+
+  <ul id="lista">
+    <li data-continente="europa">Alemania</li>
+    <li data-continente="europa">España</li>
+    <li data-continente="europa">Francia</li>
+    <li data-continente="europa">Italia</li>
+    <li data-continente="america">USA</li>
+    <li data-continente="america">Canada</li>
+    <li data-continente="america">Mexic</li>
+    <li data-continente="america">Brasil</li>
+    <li data-continente="oceania">Australia</li>
+    <li data-continente="oceania">Nueva Zelanda</li>
+  </ul>
+</body>
+</html>

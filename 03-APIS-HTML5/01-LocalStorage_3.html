@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LOCALSTORAGE CON JSON</title>
+  <script type="text/javascript">
+
+    // LOCALSTORAGE: Comprobar si navegador es compatible (tye = function):
+    if (typeof Storage == "undefined") {
+      console.log("Actualiza de navegador YA.");
+      window.location.href = "https://www.google.com";      
+    }
+    // -------------------------------------------------------
+
+    // CREAR OBJETO JSON:
+    let mi_objeto_JSON = {
+      nombre: "Alma",
+      apellidos: "Marcela Gozo",
+      ciudad: "Medellin",
+      edad: 98,
+    }
+
+    // Si hacemos un "setItem" del JSON, nos da error 
+    // porque LocalStorage sólo admite STRINGS. Hay que convertirlo:
+
+    // de JSON a STRING: 
+    // +++++++++++++++++
+    let mi_string = JSON.stringify(mi_objeto_JSON);
+    localStorage.setItem("datos", mi_string);
+
+    // Ahora podemos obtener las propiedades de "datos", pero para usarlo
+    // hay que volver a convertir el string a JSON:
+
+    // de STRING a JSON:
+    // +++++++++++++++++
+    let datos_string = localStorage.getItem("datos");    
+    let persona_JSON = JSON.parse(datos_string);
+
+    // -------------------------------------------------------    
+    // Pintar en un selector los datos de persona_JSON:
+    window.onload = () => {
+      let c = document.querySelector("#contenedor");
+      c.innerHTML = `Nombre: ${persona_JSON.nombre}<br>`;
+      c.innerHTML += `Apellidos: ${persona_JSON.apellidos}<br>`;
+      c.innerHTML += `Ciudad: ${persona_JSON.ciudad}<br>`;
+      c.innerHTML += `Edad: ${persona_JSON.edad}<br><hr>`;
+    }
+    // -------------------------------------------------------
+    
+  </script>
+  
+</head>
+<body>
+  <h1>Datos del LocalStorage</h1>
+  <h3>(de JSON a STRING ==> let mi_string = JSON.stringify (mi_objeto_JSON))</h3>
+  <h3>(de STRING a JSON ==> let persona_JSON = JSON.parse (datos_string);</h3>
+  <div id="contenedor"></div>
+  <a href="https://www.udemy.com/course/master-en-typescript-javascript-moderno-ecmascript-es12-apis-html5/learn/lecture/28973374#questions">
+    https://www.udemy.com/course/master-en-typescript-javascript-moderno-ecmascript-es12-apis-html5/learn/lecture/28973374#questions
+  </a>  
+</body>
+</html>

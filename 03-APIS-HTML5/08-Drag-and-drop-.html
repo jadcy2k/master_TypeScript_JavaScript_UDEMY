@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DRAG'N'DROP</title>
+  <style>
+    body { font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;}
+    .tomate {
+      margin: 20px;
+      float: left;
+    }
+    img {
+      width: 65px;
+      height: 65px;
+    }
+    #huerto {
+      clear: both;
+      width: 80%;
+      height: 300px;
+      background-color: aquamarine;
+      border: 5px dashed turquoise;
+      text-align: center;
+      line-height: 250px;
+    }
+    #huerto h1  {color: turquoise;}
+  </style>
+
+
+  <script>
+    // Hay eventos para los elementeos arrastrables y para la zona "drop".
+    // IMPORTANTE: Si el elemento está vacío, hay que añadir el atributo
+    // draggable = "true"
+
+    window.onload = () => {
+      // Selector de todos los "tomates" y del "huerto"
+      const tomates = document.querySelectorAll(".tomate img");
+      const huerto = document.querySelector("#huerto");
+      const cesta = document.querySelector("#cesta");
+
+      tomates.forEach( (tomate, indice) => {  
+        
+        // Asignar un ID único a cada tomate:
+        tomate.setAttribute("id", "tomate"+indice+1);
+        // Evento DRAGSTART (se lanza al inicio):
+        // -----------------
+        tomate.addEventListener ("dragstart", (e) =>{
+          console.log("Has cogido el tomate ", indice+1);
+          // Compartir info del elemento que movemos (al "drop" del destino):
+          e.dataTransfer.setData ("text", e.target.id);
+
+        })
+        // Evento DRAG (se lanza cuando se arrastra el elemento).
+        // Evento DRAGEND (se lanza cuando se suelta el elemento).
+      });
+
+      
+      // ZONA DE DROP (HUERTO):
+      // NOTA: el "drop" solo funciona en conjunto con "dragover":
+      // ----------------------
+      huerto.addEventListener ("dragover", (e) => {
+        e.preventDefault(); // evitar comportamiento estandard.
+        console.log("Tomate moviendose en el huerto");
+      });
+      huerto.addEventListener ("drop", (e) => {
+        e.preventDefault(); // evitar comportamiento estandard.
+        console.log("Tomate plantado!!");
+        // Recibir la info del elemento arrastrado (desde el "dragstart"):
+        let tomateID = e.dataTransfer.getData ("text");
+        e.target.appendChild (document.querySelector("#"+tomateID));
+
+      });
+      // huerto.addEventListener ("dragleave", (e) => {
+      //   e.preventDefault(); // evitar comportamiento estandard.
+      //   console.log("Tomate recogido.");
+      // });
+      // ZONA DE DROP (CESTA):
+      // ---------------------
+      cesta.addEventListener ("dragover", (e) => {
+        e.preventDefault(); // evitar comportamiento estandard.
+        console.log("Tomate moviendose en la cesta");
+      });
+      cesta.addEventListener ("drop", (e) => {
+        e.preventDefault(); // evitar comportamiento estandard.
+        console.log("Tomate recogido!!");
+        // Recibir la info del elemento arrastrado (desde el "dragstart"):
+        let tomateID = e.dataTransfer.getData ("text");
+        e.target.appendChild (document.querySelector("#"+tomateID));
+      });
+      cesta.addEventListener ("dragleave", (e) => {
+        e.preventDefault(); // evitar comportamiento estandard.
+        console.log("Tomate recogido.");
+      });
+      
+
+
+
+
+
+    }
+  </script>
+
+</head>
+<body>
+  <h1>Drag and drop</h1>
+  <h2>Arrastra los tomates al huerto:</h2>
+
+  <section id="cesta">
+    <div class="tomate"><img src="tomate.png"></div>
+    <div class="tomate"><img src="tomate.png"></div>
+    <div class="tomate"><img src="tomate.png"></div>
+    <div class="tomate"><img src="tomate.png"></div>
+  </section>
+
+  
+  <section id="huerto">
+    <h1>HUERTO</h1>
+  </section>
+</body>
+</html>

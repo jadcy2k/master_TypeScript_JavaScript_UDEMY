@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Varias pruebas</title>
+
+  <script>
+    // Variables de uso local (bloque)
+    let nombre = "Victor";
+    let apellido = "Tilla";
+    let oficio = "cocinero";
+    let ciudad = "Girona";
+  
+    // Template string: se coloca entre: ``
+    //-----------------------------------
+    let plantilla1 = `
+    Prueba de plantilla: 
+    ${nombre} ${apellido}. 
+    Es ${oficio} y vive en ${ciudad}`;
+
+    console.log(plantilla1);
+    
+    let plantilla2 = `
+      <div style="border:1px solid red; padding: 0 1rem;">
+        <h2>${nombre} ${apellido}.</h2>
+        <p>es ${oficio} y vive en ${ciudad}</p>
+      </div> `;
+  
+    //salida en DOM:
+    let cajaPlantilla1 = document.createElement("section");
+    cajaPlantilla1.innerHTML = plantilla1;  
+    document.addEventListener('DOMContentLoaded', function(){
+      document.body.appendChild(cajaPlantilla1);
+    }, false);
+  
+    let cajaPlantilla2 = document.createElement("section");
+    cajaPlantilla2.innerHTML = plantilla2;  
+    document.addEventListener('DOMContentLoaded', function(){
+      document.body.appendChild(cajaPlantilla2);
+    }, false);
+
+    // Tipos de variable:
+    // #########################################################
+    // String
+    let vecina = "Natalia"; console.log(typeof vecina);
+    // Number
+    let hijos = 14; console.log(typeof hijos);
+    let pi = 3.1415928578; console.log(typeof pi);
+    // Boolean:
+    let esMartes = true; console.log(typeof esMartes);
+    let casada = Boolean(1); // 1=true, 0=false;
+    // Array: (object)
+    let frutas = ['pera', 'manzana', 'kiwi', 'limon']; console.log(typeof frutas);
+    // null (object)
+    let vacio = null; console.log(typeof vacio); // Object
+    // undefined 
+    let indefinido = undefined; console.log(typeof indefinido); //undefined
+    
+    // JSON (objeto literal)
+    // #########################################################
+    // let objeto = { clave: valor, clave2: valor2, ...}
+    let pelicula = {titulo: "Pulp Fiction", genero: "Accion", director:"Tarantino"}
+    console.log(typeof pelicula); // Object.
+    console.log("Pelicula:",pelicula.titulo,"---",pelicula.genero, pelicula.director);
+    // JSON con funciones:
+    let pelicula2 = {
+      titulo: "Regreso al futuro",
+      genero: "comedia",
+      director: "Robert Zemeckis",
+      info: function(){
+        return `
+          **** LA PELÍUCLA DE LA SEMANA ****
+          ${this.titulo} - (${this.director})
+          ${this.genero}
+          ++++++++++++++++++++++++++++++++++        
+        `
+      }
+    }
+    console.log(pelicula2.info());
+    console.log(typeof pelicula2.info); // function
+    console.log(typeof pelicula2.info()); // string: Es lo que la función devuelve.
+    // Agregar datos nuevos al JSON:
+    pelicula.pais = "Estados Unidos";
+    pelicula["year"] = 1984;
+    console.log(pelicula);
+    // Eliminar dato del JSON:
+    delete pelicula.pais;
+    pelicula.director = null;
+    console.log(pelicula);
+    //------------------------------------------------------
+    console.log("++++ Recorrer JSON (mostrar propiedades):");
+    for (let propiedad in pelicula2){
+      console.log(propiedad);
+    }
+    //------------------------------------------------------
+    console.log("++++ Recorrer JSON (mostrar valores):");
+    for (let valor in pelicula2) {
+      console.log(pelicula2[valor]);
+      //OJO: "pelicula2.valor" da error porque la propiedad "valor" no existe en el JSON. Se usa corchetes.
+    }
+    //------------------------------------------------------
+    console.log("++++++ Recorrer valores JSON válidos (no funciones ni null)");
+    for (let prop in pelicula2){
+      if ((pelicula2[prop] !== null) && (typeof(pelicula2[prop])!== "function")){
+        console.log(pelicula2[prop]);
+      }
+    }
+    //------------------------------------------------------
+
+    // SYMBOL (Crea objetos únicos)
+    // #########################################################
+
+    let animal1 = Symbol("tigre");
+    let animal2 = Symbol("tigre");
+    console.log("+++ animal1 y animal2 son iguales??", animal1 === animal2); // false.
+    
+    // Permite crear propiedades con el mismo nombre que se tratarán de diferente forma:
+    let user = { 
+      id: 1,
+      nombre: "Benito Camela"
+    }
+    console.log("+++ User con la propiedad ID única:", user);
+    console.log("A la propiedad se accede con 'user.id' y al symbol como 'user[id]'");
+    let id = Symbol('id');
+    user[id] = 7;
+    console.log("+++ Muestra los diferentes IDs:", user.id, user[id]);
+    // También permite ocultar el nombre de la propiedad cuando se muestra el objeto:
+    let id_secreto = Symbol('id');
+    console.log("+++ Ahora el 'user' tiene OTRO symbol(id) cuyo nombre 'id_secreto' está oculto:", user);
+    user[id_secreto] = 999;
+    console.log("+++ Hemos manipulado la propiedad usando 'user[id_secreto]' seguimos teniendo 2:", user);
+
+     
+  </script>  
+
+</head>
+<body>
+<h1>Master en Typescript, Javascript moderno, ES2021, APIs HTML5</h1>
+<p>
+  Para ejecutar desde VSCode, click derecho encima del documento html y
+  seleccionar <strong>"Open with Live Server"</strong> (es una extensión)
+</p>
+<p>
+  Esto abre en el navegador el archivo: <a href="http://127.0.0.1:5500/01-JAVASCRIPT/01-prueba.html">http://127.0.0.1:5500/01-JAVASCRIPT/01-prueba.html</a>
+  el cual se puede abrir en VSCode seleccionando (mays + command + P):
+  <strong>Simple Browser: Show</strong> (extensión incorporada "built-in")
+</p>
+<h3>los ejemplos de este script se ven en cónsola.</h3>
+</body>
+</html>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FETCH</title>
+</head>
+<body>
+  <script>
+
+    // FETCH (obtener datos via AJAX): 
+    // https://developer.mozilla.org/es/docs/Web/API/Fetch_API/Using_Fetch
+    // ####################################################################
+
+    console.log("++++++++++++ FETCH (obtener datos via AJAX) ++++++++++++++"); 
+    
+    
+    let getPosts = () => {
+      let urlPosts = "https://jsonplaceholder.typicode.com/posts";
+      // Invocamos al método FETCH:
+      fetch (urlPosts)
+      // primero convertimos la repuesta a JSON:
+        .then (response => response.json())
+      // Ahora ya podemos acceder a los datos de esa respuesta:
+        .then (items => {console.log(items); contenedor.innerHTML=""; mostar(items)})
+      // Recoger errores:
+        .catch (error => {
+          console.log("Error:", error.message); 
+          contenedor.innerHTML="Error de la API!!"
+        });
+    };
+
+
+    // USO DEL DOM:
+    // ####################################################################
+
+    // Creamos un eventListener para detectar que el DOM está cargado antes de ejecutar scripts:
+    window.addEventListener("DOMContentLoaded", event => {
+      console.log(event);
+      // inicializamos el contenedor:
+      let contenedor = document.querySelector("#contenedor");
+      contenedor.innerHTML = "<h1>Cargando.....</h1>";
+      // Obtenemos los posts:
+      getPosts();
+    });
+
+    // -------------------------------------------------------
+
+    let mostar = (elementos) => {
+      elementos.forEach(elemento => {
+        let muestraElemento = `
+          <article>
+            <h2>${elemento.title}</h2>
+            <p>${elemento.body}</p>          
+          </article>
+          <hr/>
+        `;
+        contenedor.innerHTML += muestraElemento;         
+      });
+    }
+    // -------------------------------------------------------
+
+  </script>
+
+
+  <h1>FETCH</h1>
+  <a href="https://www.udemy.com/course/master-en-typescript-javascript-moderno-ecmascript-es12-apis-html5/learn/lecture/28216192#questions">
+    https://www.udemy.com/course/master-en-typescript-javascript-moderno-ecmascript-es12-apis-html5/learn/lecture/28216192
+  </a>
+  <h4>Haremos peticiones falsas a esta API:
+    <a href="https://jsonplaceholder.typicode.com/">https://jsonplaceholder.typicode.com/</a><br />
+    <a href="https://developer.mozilla.org/es/docs/Web/API/Fetch_API/Using_Fetch">Más info de FETCH.</a>
+  </h4>
+  <hr>
+  <h1>Posts cargados vía AJAX:</h1>
+  <hr>
+  <div id="contenedor"></div>
+ 
+</body>
+</html>

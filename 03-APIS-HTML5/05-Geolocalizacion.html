@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>API GEO</title>
+
+  <script type="text/javascript">
+    // GEOLOCALIZACION: Comprobar si navegador es compatible:
+    // -----------------------------------------
+    if (navigator.geolocation == "undefined") {
+      console.log("Actualiza de navegador YA.");
+      window.location.href = "https://www.google.com";      
+    }    
+    console.log("Tenemos disponible la geolocalizacion de navegador:", navigator.geolocation);
+
+    // Geolocation permite obtener la "getCurrentPosition":
+    // IMPORTANTE: Para que funcione, hay que darle PERMISOS para acceso a ubicación.
+    // -----------------------------------------
+
+    navigator.geolocation.getCurrentPosition (
+      position => {
+        console.log("Posicion actual: ", position);
+        let lat = position.coords.latitude;
+        let lon = position.coords.longitude;
+        console.log("Las coordenadas son (lat,lon): " ,lat, "," , lon);
+      },
+      error => {
+        console.log("Ha habido un error de GEO.");
+      }
+    )
+
+    console.log("---------------------------------------------------------------");
+
+
+  </script>
+</head>
+<body>
+  <h1>(ver console)</h1>
+</body>
+</html>

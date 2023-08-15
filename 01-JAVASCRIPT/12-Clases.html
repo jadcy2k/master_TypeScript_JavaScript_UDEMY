@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Clases</title>
+</head>
+<body>
+  <script>
+    'strict mode'
+    
+    /** 
+     * CLASE COCHE
+     * Una clase funciona como un MOLDE del cual podremos sacar copias:
+     **/
+    class Coche { //Por convención, empieza por Mayúscula.
+      // constructor: con propiedades (algunas con valor por defecto)
+      constructor (marca = "blanca", modelo = "n/s", color = "rojo", year = "2000") {
+        this.marca = marca;
+        this.modelo = modelo;
+        this.color = color;
+        this.year = year;
+        this.velocidad = 100;
+      }
+
+      // Métodos / acciones:
+      acelerar() { this.velocidad += 10;}
+      // -------------------------------------------------------
+      // Getters / Setters (obtienen y asignan valores)
+      setMarca (marca) {this.marca = marca}
+      getMarca () {return this.marca}
+      // -------------------------------------------------------
+      // Getters / Setters por asignación:
+      set nuevoModelo (modelo) {this.modelo = modelo}
+      get verModelo () { return this.modelo}
+      // -------------------------------------------------------
+      // Método ESTÁTICO (se invoca desde la clase y NO desde instancia).
+      static arrancar () { console.log("...BRooooooOOOommmm!!!! ");}
+      // -------------------------------------------------------
+      // Propiedades PRIVADAS (NO son accesibles desde fuera de la clase).
+      // se declaran empezando con "#":
+      #numPuertas = 5;
+      #radio = true;
+      // Se puede usar en métodos:
+      tieneRadio () { return this.#radio ? "SÍ" : "NO"; }
+      get numPuertas () { return this.#numPuertas}
+      // -------------------------------------------------------
+    }
+    // ###################################################################
+
+    /**
+     * CLASE QUAD 
+     * Heredada de COCHE, lo que extiende su definición
+     **/
+
+    class Quad extends Coche {
+      // Constructor:
+      constructor (cilindrada) {
+        // con SUPER podremos acceder a las propiedades del padre en el constructor.
+        super();
+        // -------------------------------------------------------
+        // Nuevas propiedades (que NO estan en clase Coche):
+        this.cilindrada = 250;
+        // -------------------------------------------------------
+        // Reemplazo de propiedad del padre:
+        this.color = "amarillo";
+      }      
+      // -------------------------------------------------------      
+      // Método ESTÁTICO (se invoca desde la clase y NO desde instancia).
+      static saltar () { console.log(".......He dado un salto muy alto!!");}
+    }
+
+    // ###################################################################
+
+
+    // INSTANCIAS:
+    let mi_coche1 = new Coche("Mercedes", "SLK", "negro", "2014");
+    console.log("Mi coche:", mi_coche1);
+    let mi_coche2 = new Coche("Audi", "Q7");
+    console.log("Mi otro coche:", mi_coche2);
+    console.log("-------------------------------------------");
+
+    // Uso de método:
+    mi_coche1.acelerar();
+    mi_coche1.acelerar();
+    mi_coche1.acelerar();
+    console.log("Velocidad actual:", mi_coche1.velocidad);
+    console.log("-------------------------------------------");
+
+    // Estos setter/getter funcionan con paréntesis ():
+    mi_coche1.setMarca("Lamborghini");
+    console.log("Mi coche ahora es:", mi_coche1.getMarca());
+    console.log("-------------------------------------------");
+
+    // Estos setter/getter funcionan con asignación "=":
+    mi_coche2.nuevoModelo = "TT coupe";
+    console.log("El nuevo modelo es:", mi_coche2.verModelo);
+    console.log("-------------------------------------------");
+    
+    // Uso de método ESTÁTICO:
+    console.log("mi_coche1.arrancar() ---> Devuelve ERROR porque se ha invocado desde INSTANCIA.");
+    console.log("Coche.arrancar() -------> Funciona porque se invoca desde la CLASE.");
+    Coche.arrancar(); // Funciona porque se invoca desde la CLASE.
+    console.log("-------------------------------------------");
+
+    // Test de propiedades PRIVADAS:
+    console.log("mi_coche1.#radio  -->  Al ser privada, no se puede usar fuera.");
+    console.log("Mi coche tiene radio?", mi_coche1.tieneRadio());
+    console.log("Y tiene " + mi_coche1.numPuertas + " puertas");
+    console.log("-------------------------------------------");
+
+    // HERENCIA:
+    let mi_quad1 = new Quad ();
+    console.log("class Quad extends Coche ");
+    console.log(mi_quad1);
+    mi_quad1.setMarca("BMW");
+    mi_quad1.nuevoModelo = "Quad4x4R";
+    console.log("Mi quad es " + mi_quad1.getMarca() + " modelo " + mi_quad1.verModelo);
+    console.log("mi_coche1.cilindrada = undefined  --> Esa propiedad NO está en la clase Coche.");
+    console.log("mi_quad1.cilindrada =", mi_quad1.cilindrada);
+    console.log("-------------------------------------------");
+    console.log("Coche.saltar() ------> Coche NO conoce ese método ");
+    console.log("mi_quad1.saltar() ---> Es método estático, no funciona en instancias.");
+    console.log("Quad.saltar() -------> Funciona OK ");
+    Quad.saltar();
+    console.log("-------------------------------------------");
+    
+  </script>
+
+  <h1>CLASES</h1>
+  <a href="https://www.udemy.com/course/master-en-typescript-javascript-moderno-ecmascript-es12-apis-html5/learn/lecture/28356568#questions">
+    https://www.udemy.com/course/master-en-typescript-javascript-moderno-ecmascript-es12-apis-html5/learn/lecture/28356568#questions
+  </a>
+  
+</body>
+</html>

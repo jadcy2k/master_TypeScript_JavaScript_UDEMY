@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SESSION STORAGE</title>
+  <script type="text/javascript">
+    // STORAGE: Comprobar si navegador es compatible (tye = function):
+    if (typeof Storage == "undefined") {
+      console.log("Actualiza de navegador YA.");
+      window.location.href = "https://www.google.com";      
+    }
+
+    // Guardatos en el navegador de forma persistente:
+    sessionStorage.setItem("mensaje", "Hola mundo!!");
+
+    // Obtener datos:
+    let mensaje = sessionStorage.getItem("mensaje");
+    //alert (mensaje);
+    window.onload = () => {
+      let contenedor = document.querySelector("#contenedor");
+      contenedor.innerHTML = `${mensaje} ==> está guardado en Session Storage.`;
+    }
+
+    // NOTA: Para testear, podemos comentar la línea del "setItem".
+    // Además podemos consultar en "developer tools > Application > Session Storage"
+
+  </script>
+</head>
+<body>
+  <h1>Session Storage</h1>
+  <h3>(abrir Developer tools > Application > Session Storage)</h3>
+
+  <div id="contenedor"></div>  
+</body>
+</html>

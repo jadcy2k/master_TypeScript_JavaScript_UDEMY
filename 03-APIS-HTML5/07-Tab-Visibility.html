@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DETECTAR VISIBILIDAD DE PESTAÑA</title>
+
+  <script>
+
+  window.onload = () => {
+    let miVideo = document.querySelector("#miVideo");
+    // Escuchar el evento "visibilitychange":
+    // --------------------------------------
+    addEventListener("visibilitychange", () =>{
+      if (document.visibilityState === "visible"){
+        miVideo.play();
+        alert("Has vuelto a la pestaña.")
+      }else{        
+        miVideo.pause();
+      }
+    });
+  }    
+
+  </script>
+</head>
+<body>
+  <h1>Detectar si el usuario está viendo la pestaña actual</h1>
+  <h2>Cambia de pestaña para pausar el video.</h2>
+
+  <video id="miVideo" width="320" height="240" controls>
+    <source src="movie.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+    
+</body>
+</html>

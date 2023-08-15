@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PROMESAS</title>
+</head>
+<body>
+  <script>
+    // PROMESAS
+    // ####################################################################
+    console.log("++++++++++++ CONCATENAR PROMESAS ++++++++++++++");
+    console.log("++ JS es un lenguaje ASÍNCRONO. Las promesas permiten controlar esas operaciones asíncronas.");
+
+    // Simulamos la respuesta de una petición API:
+    let productos = [
+      {
+        nombre: "Ordenador",
+        marca: "Apple",
+        precio: 1500
+      },
+      {
+        nombre: "Laptop",
+        marca: "Asus",
+        precio: 1240
+      },
+      {
+        nombre: "Tablet",
+        marca: "Samsung",
+        precio: 750
+      },
+      {
+        nombre: "Smartphone",
+        marca: "Motorola",
+        precio: 475
+      },
+    ];
+    
+    // Acceder a los productos con PROMESAS:
+    let getProductosPromise = () => {      
+      return new Promise ( (resolve, reject) => {
+        console.log("1) Esperando los datos...");
+        setTimeout ( () => {
+          resolve(productos)}, 2000 ); //2 segundos.
+      });
+    };
+
+    // Creamos otra promesa para comprar producto:
+    let productoComprado = (nombre) => {
+      return new Promise ( (resolve, reject) => {
+        console.log("3) Haciendo la compra...");
+        setTimeout(() => {
+          resolve({
+              producto: nombre,
+              cliente: "Alma Marcela Gozo"
+            });          
+        }, 2000); // 2 segundos.
+      });
+    }
+
+    // funcion para procesar la venta:
+    let procesarVenta = (venta) => {
+      console.log("4) Producto comprado:", venta);
+      // Filtramos los productos restantes:
+      productos = productos.filter ( producto => {return producto.nombre != venta.producto});
+      return productos;
+    }
+
+
+    // Ahora hay que reaccionar si existe un RESOLVE, lo hacemos con THEN.
+    // Si existe un REJECT, haremos un CATCH del error.
+    // También podemos usar FINALLY para ejecutar algo cuando se haya terminado la promesa:
+    getProductosPromise()
+      .then (items => {
+        console.log("2) resultado lista de productos:", items);
+        return productoComprado("Tablet");
+      })
+      .then (venta => {
+        procesarVenta(venta);
+        return productoComprado("Laptop");        
+      })
+      .then (venta => {
+        procesarVenta(venta);
+        return productoComprado("Smartphone");
+      })
+      .then (venta => {
+        procesarVenta(venta);
+      })
+      .catch (error => console.log(error.message))
+      .finally ( (items) => {
+
+        if (productos.length >=1) {
+          console.log("Productos disponibles aún:", productos);
+        }else{
+          console.log("No quedan productos.");
+        }        
+        
+        console.log("6) Promesa finalizada.");
+        console.log("--------------------------------------");    
+      });
+
+
+  </script>
+  <h1>PROMESAS (parte 3)</h1>
+  <h2>Ver el código fuente (dentro de "script" y la salida de cónsola.</h2>
+  <a href="https://www.udemy.com/course/master-en-typescript-javascript-moderno-ecmascript-es12-apis-html5/learn/lecture/28201888">
+    https://www.udemy.com/course/master-en-typescript-javascript-moderno-ecmascript-es12-apis-html5/learn/lecture/28201888
+  </a>
+  <h3>MÁS INFO:</h3>
+  <a href="https://developer.mozilla.org/es/docs/Web/JavaScript/Guide/Using_promises"></a>
+</body>
+</html>

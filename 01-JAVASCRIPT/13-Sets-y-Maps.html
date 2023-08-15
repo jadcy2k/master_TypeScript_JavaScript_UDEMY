@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+
+  <script>
+    /**
+     * El objeto SET permite almacenar valores únicos de cualquier tipo, 
+     * incluso valores primitivos o referencias a objetos.
+     **/
+
+     console.log("NEW SET()");
+     let gadgets = new Set ( ["iPhone", "Tablet", "Laptop", "iWatch"]);
+     console.log("Mis gadgets:", gadgets);
+     console.log("-------------------------------------------");     
+
+     // Iterar:
+     console.log("Lista de gadgets:");
+     for (let item of gadgets) { console.log("*", item); }
+     console.log("-------------------------------------------");
+
+     // Tamaño: 
+     console.log("+ El tamaño del set se obtiene con 'size' y no 'length':");
+     console.log("gadgets.size:", gadgets.size);
+     console.log("-------------------------------------------");
+
+     // Agregar nuevos elementos (con ADD):
+     console.log("+ Agregamos 3 items con 'gadget.add('elemento')':");
+     gadgets.add ("Webcam");
+     gadgets.add ("Chromecast");
+     gadgets.add ("Airpods");
+     console.log("Gadgets:", gadgets);
+     console.log("-------------------------------------------");
+     // Agregar varias veces el mismo:
+     console.log("+ Importante: NO podemos agregar el mismo elemento varias veces:");
+     gadgets.add ("TV");
+     gadgets.add ("TV");
+     gadgets.add ("TV");
+     console.log("TV sólo se muestra 1 vez:", gadgets);
+     console.log("-------------------------------------------");
+
+     // Eliminar elementos (con DELETE):
+     console.log("+ Podemos eliminar elementos con: 'gadget.delete('elemento')':");
+     gadgets.delete("Tablet");
+     console.log("Ahora falta la 'Tablet':", gadgets);
+     console.log("-------------------------------------------");
+
+     // Comprobar si un elemento existe en el set (con HAS):
+     console.log("+ Comprobamos la existencia de un elemento con gadget.has('elemento'):");
+     console.log("Tenemos iWatch?", gadgets.has("iWatch"));
+     console.log("Tenemos OculusVR?", gadgets.has("OculusVR"));
+     console.log("-------------------------------------------");
+
+     // Limpiar el set (elminar todo):
+     console.log("+ Podemos limpiar el set con 'gadgets.clear()':");
+     gadgets.clear();
+     console.log("Mis gadgets:", gadgets);     
+     console.log("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+
+    // -------------------------------------------------------
+
+
+    /**
+     * MAP funciona de forma similar pero permite guardar pares indice-objeto
+     * Se accede a los elementos mediante su indice (clave o key) alfanumérica.
+     * 
+     **/
+    
+     console.log("NEW MAP()");
+     let farbe = new Map();
+
+    // Agregar elementos con SET(indice, valor):
+    console.log("+ Agregamos elementos con 'map.set(indice, valor)':");
+    farbe.set (1, "Rojo");
+    farbe.set (2, "Verde");
+    farbe.set (3, "Azul");
+    console.log("Mapa de colores:", farbe);
+
+    // OJO: Al repetir índice, la posición se sobreescribe. (Podemos repetir el valor):
+    console.log("+ Sobreescribimos el primer índice y agregamos otro elemento con el mismo nombre:");
+    farbe.set (1, "Naranja");
+    farbe.set (4, "Naranja");
+
+    console.log("Mapa de colores:", farbe);
+
+    // Los índices (key o clave) pueden ser también STRING:
+    console.log("+ Los índices (key o clave) pueden ser también STRING:");
+    farbe.set ("cinco", "Amarillo");
+    farbe.set ("seis", "Rosa");
+    console.log("Mapa de colores:", farbe);
+    console.log("-------------------------------------------");
+
+    // Convertir OBJETOS a MAPS:
+    const frutas_objeto = {
+      uno: "Manzana",
+      dos: "Pera",
+      tres: "Plátano"
+    }
+
+    const frutas = new Map ( Object.entries (frutas_objeto) );
+    console.log("+ Mapa de frutas (a partir de OBJETO:", frutas);
+    console.log("frutas = new Map ( Object.entries (frutas_objeto) )");
+    console.log("-------------------------------------------");
+
+    // Obtener elementos (GET):
+    console.log("+ Obtener elementos con 'map.get(indice)':");
+    console.log("Primera fruta:", frutas.get("uno"));
+    console.log("Segundo color:", farbe.get(2));
+    console.log("-------------------------------------------");
+
+    // Tamaño (con SIZE):
+    console.log("+ Tamaño del map con SIZE (no LENGTH):");
+    console.log("Cuántas frutas tengo?:", frutas.size);
+    console.log("-------------------------------------------");
+
+    // Comprobar la existencia: Busca índices NO valores:
+    console.log("+ Podemos comprobar si existe un índice concreto pero NO un valor:");
+    console.log(frutas);
+    console.log("Existe la fruta 'tres'?", frutas.has("tres"));
+    console.log("Existe la fruta 'Plátano'?", frutas.has("Plátano"), "(devuelve 'false' porque ese indice NO existe).");
+    console.log("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+
+    // -------------------------------------------------------
+
+    /**
+     * WEAKMAP y WeAKSET es exactamente igual pero sólo permite guardar objetos Javascript.
+     **/
+
+  </script>
+  
+  <h1>SETS y MAPS</h1>
+  <a href="https://www.udemy.com/course/master-en-typescript-javascript-moderno-ecmascript-es12-apis-html5/learn/lecture/28375156#questions">
+    https://www.udemy.com/course/master-en-typescript-javascript-moderno-ecmascript-es12-apis-html5/learn/lecture/28375156#questions
+  </a>
+
+  <ul>
+    <li><a href="https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Global_Objects/Set">SET (mdn docs.)</a></li>
+    <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map">MAP (mdn docs.)</a></li>
+    <li><a href="https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Global_Objects/WeakSet">WEAKSET (mdn docs.)</a></li>
+    <li><a href="https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Global_Objects/WeakMap">WEAKMAP (mdn docs.)</a></li>    
+
+  </ul>
+  
+</body>
+</html>
